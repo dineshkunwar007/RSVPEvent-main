@@ -1,0 +1,9 @@
+{
+  "appId": "com.ceh.eventapp",
+  "appName": "eventapp",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "url": "http://10.99.145.63:8080"
+  }
+}
