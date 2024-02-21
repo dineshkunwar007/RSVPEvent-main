@@ -201,21 +201,8 @@ export default ({
   data(){
     const $q = useQuasar()
     const mode= ref('Register')
-    const user= ref(null)
+    const user= ref(null)    
     
-    /* async function login(email,password){
-await await signInWithEmailAndPassword(auth,email,password).then((res) => {
-        console.log(res)
-      }).catch((err)=>
-      {console.log(err)})
-    } */
-   /*  async function register(email,password){
-      debugger;
-      await createUserWithEmailAndPassword(auth,email,password).then((res) => {
-        console.log(res)
-      }).catch((err)=>
-      {console.log(err)})
-    } */
     async function signout()
     {
 
@@ -224,19 +211,7 @@ await await signInWithEmailAndPassword(auth,email,password).then((res) => {
       }).catch((err)=>
       {console.log(err)})
     }
-   /*  function submit()
-    {
-      let email= data.value.email;
-    let password= data.value.password;
-    if(mode.value==='login'){ login(email,password)}
-    else
-    register(email,password)
-  } */
-  
-/*   onAuthStateChanged(auth, currentUser =>{
-user.value=currentUser
-  }
-  ) */
+   
     $q.dark.set(false)
     return {
        mode:ref('login'),

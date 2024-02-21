@@ -38,6 +38,10 @@
           :key="link.title"
           v-bind="link"
         />
+        <q-toggle
+      :label="`Dark theme enabled: ${blueModel}`"
+      v-model="blueModel"  @click="onEventClick(blueModel)"
+    />
       </q-list>
     </q-drawer>
 
@@ -107,12 +111,22 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
 
     return {
+      blueModel: ref(true),
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }
-  }
+  },
+  methods:{
+    onEventClick(blueModel){
+      
+     if(blueModel)
+     $q.dark.set(true)
+    else
+    $q.dark.set(false)
+
+    }}
 })
 </script>
