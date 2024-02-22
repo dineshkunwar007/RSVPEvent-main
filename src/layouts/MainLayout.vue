@@ -55,35 +55,25 @@ import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { event, useQuasar,Dark  } from 'quasar'
 const linksList = [
+  
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'contact us at:',
+    caption: 'support@mymanu.co.uk',
+    icon: 'email',
+    link: 'mailto:support@mymanu.co.uk?subject= Event Query'
+   /*  <a href="mailto:email@example.com?subject=Mail from our Website">Send Email</a> */
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
+    title: 'User profile',
+    caption: 'Change user details here',
+    icon: 'person',
+    link: ''
+  }/* ,
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
+    title: 'Mymanu',
+    caption: 'Apolo',
     icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    link: 'https://mymanu.com/products/mymanu-apollo'
   },
   {
     title: 'Facebook',
@@ -96,7 +86,7 @@ const linksList = [
     caption: 'Community Quasar projects',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
-  }
+  } */
 ]
 
 export default defineComponent({
@@ -119,12 +109,8 @@ export default defineComponent({
     }
   },
   methods:{
-    onToggleChange(newValue) {
-     
-      if(newValue)
-      Dark.set(true)
-    else
-    Dark.set(false)
+    onToggleChange(newValue) {    
+      newValue? Dark.set(true):Dark.set(false)   
     }
   }
 })

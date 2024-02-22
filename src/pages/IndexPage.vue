@@ -238,6 +238,9 @@ export default ({
       alert("Login successful")
       }).catch((err)=>
       {alert(err.message)})
+      onAuthStateChanged(auth, currentUser =>{
+      this.user=currentUser
+    })
     }
     else{ createUserWithEmailAndPassword(auth,email,password).then((res) => {
       if(res !=null && res!=undefined && res.user.uid !=null && res.user.uid!=undefined)
@@ -245,9 +248,7 @@ export default ({
       }).catch((err)=>
       {
      alert( err.message)})}
-     onAuthStateChanged(auth, currentUser =>{
-      this.user=currentUser
-    })
+    
   },
    toggleMode(val){
       this.mode=val
