@@ -1,78 +1,81 @@
 <template>
   <q-page class="flex">
-    <div class="q-pa-md row items-start q-gutter-md" v-if="activeScreen=='list'" v-for="i in 3" :key="i">
-      <q-card class="my-card" @click="onEventClick(i)" >
-        <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+    <div
+      class="q-pa-md row items-start q-gutter-md"
+      v-if="activeScreen == 'list'"
+      v-for="objEvent in computedEventList"
+      :key="objEvent.id"
+    >
+      <q-card class="my-card" @click="onEventClick(i)">
+        <img :src="objEvent.eventImg" />
 
         <q-card-section>
-          <div class="text-h6">Event summary</div>
-          <div class="text-subtitle2">by Dinesh (Mymanu)</div>
+          <div class="text-h6">{{ objEvent.eventTitle }}</div>
+          <div class="text-subtitle2">{{ objEvent.createdby }}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          {{ lorem }}
+          {{ objEvent.eventSummary }}
         </q-card-section>
       </q-card>
       <!-- EVENT Details start-->
-     
-     <!-- EVENT Details end-->
+
+      <!-- EVENT Details end-->
     </div>
     <div v-else>
-     Event NO. {{ selectedEvent }}
       <RegisterUser :name="activeScreen"></RegisterUser>
-      <q-card  class="my-card"  >
-      <img src="https://cdn.quasar.dev/img/parallax2.jpg">
-      
-      <q-list style="align-items:baseline;">
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="primary" name="date_range" />
-          </q-item-section>
+      <q-card class="my-card">
+        <img src="https://cdn.quasar.dev/img/parallax2.jpg" />
 
-          <q-item-section>
-            <q-item-label>01/04/2024</q-item-label>
-            <q-item-label caption>10:00AM - 3:00PM</q-item-label>
-          </q-item-section>
-        </q-item>
+        <q-list style="align-items: baseline">
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon color="primary" name="date_range" />
+            </q-item-section>
 
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="primary" name="location_on" />
-          </q-item-section>
+            <q-item-section>
+              <q-item-label>01/04/2024</q-item-label>
+              <q-item-label caption>10:00AM - 3:00PM</q-item-label>
+            </q-item-section>
+          </q-item>
 
-          <q-item-section>
-            <q-item-label @click="onnavigation('Host Social Media City Uk Salford England M50 2ST')">Blue Tower, </q-item-label>
-            <q-item-label caption>Host Social, Media City Uk, Salford, England, M50 2ST</q-item-label>
-          </q-item-section>
-        </q-item>
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon color="primary" name="location_on" />
+            </q-item-section>
 
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="primary" name="share" />
-          </q-item-section>
+            <q-item-section>
+              <q-item-label>Blue Tower</q-item-label>
+              <q-item-label caption
+                >Host Social, Media city M54UF Manchester</q-item-label
+              >
+            </q-item-section>
+          </q-item>
 
-          <q-item-section>
-            <q-item-label>Share</q-item-label>
-           
-          </q-item-section>
-        </q-item>
-        <q-item clickable>
-          <q-item-section avatar>
-            <q-icon color="primary" name="book_online" />
-          </q-item-section>
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon color="primary" name="share" />
+            </q-item-section>
 
-          <q-item-section >
-            <q-item-label>Book your ticket</q-item-label>
-          
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-card>
-    
+            <q-item-section>
+              <q-item-label>Share</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon color="primary" name="book_online" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Book your ticket</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card>
     </div>
 
-  <!-- login/register strt-->
-  <!-- <div class="column q-pa-lg">
+    <!-- login/register strt-->
+    <!-- <div class="column q-pa-lg">
       <div class="row">
         <q-card square class="shadow-24" style="width:300px;height:485px;">
           <q-card-section class="bg-deep-purple-7">
@@ -155,106 +158,162 @@
       </div>
     </div> -->
     <!-- login/register end-->
-<div class="q-pa-md row items-start q-gutter-md" >
-
-  <div v-if="user" >{{ user.email}}<q-btn @click="signout">Sign Out</q-btn></div>
-  <q-form @submit.prevent="submit">
-  <div>
-  <q-input v-model="email" type="email" placeholder="Enter Email">
-  <template v-slot:prepend> <q-icon name="email" />  </template></q-input>
-   </div>
-  <div>  <q-input  v-model="password" type="password" rea placeholder="Enter password">
-    <template v-slot:prepend> <q-icon name="password" />  </template></q-input>
- </div>
-  <q-btn type="submit">{{ mode==='login' ? 'Login' : 'Register'}}</q-btn>
-   <div @click="toggleMode(mode==='login' ? 'register' : 'login')">{{ mode==='login' ? 'Not a user? Register' : 'Already a user? Login'}}</div>
-  </q-form>
-</div>
-    
+    <div class="q-pa-md row items-start q-gutter-md">
+      <div v-if="user">
+        {{ user.email }}<q-btn @click="signout">Sign Out</q-btn>
+      </div>
+      <q-form @submit.prevent="submit">
+        <div>
+          <q-input v-model="email" type="email" placeholder="Enter Email">
+            <template v-slot:prepend> <q-icon name="email" /> </template
+          ></q-input>
+        </div>
+        <div>
+          <q-input
+            v-model="password"
+            type="password"
+            rea
+            placeholder="Enter password"
+          >
+            <template v-slot:prepend> <q-icon name="password" /> </template
+          ></q-input>
+        </div>
+        <q-btn type="submit">{{
+          mode === "login" ? "Login" : "Register"
+        }}</q-btn>
+        <div @click="toggleMode(mode === 'login' ? 'register' : 'login')">
+          {{
+            mode === "login" ? "Not a user? Register" : "Already a user? Login"
+          }}
+        </div>
+      </q-form>
+    </div>
+    <q-footer rounded>
+      <q-tabs
+        no-caps
+        active-color="primary"
+        indicator-color="transparent"
+        class="text-grey-8"
+        v-model="tab"
+      >
+        <q-tab name="images"><img src="icons/50.png" /></q-tab>
+        <q-tab name="videos"> <img src="icons/panel.png" /></q-tab>
+        <q-tab name="articles"><img src="icons/profile.png" /></q-tab>
+      </q-tabs>
+    </q-footer>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import { event, useQuasar } from 'quasar'
-import RegisterUser from 'src/components/RegisterUser.vue'
-import {auth} from 'src/firebase.js'
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut, onAuthStateChanged} from 'firebase/auth'
-import {ref} from 'vue'
-//import launchnavigator from 'node_modules/uk.co.workingedge.phonegap.plugin.launchnavigator/src/android/LaunchNavigatorPlugin.java'
-export default ({
+import { event, useQuasar } from "quasar";
+import RegisterUser from "src/components/RegisterUser.vue";
+import { auth } from "src/firebase.js";
+import {
+  db,
+  collection,
+  storage,
+  sRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "src/firebase.js";
+import { addDoc, onSnapshot, doc, updateDoc } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { ref } from "vue";
+export default {
   name: "IndexPage",
-  components:{
+  components: {
     RegisterUser,
   },
-  data(){
-    const $q = useQuasar()
-    const mode= ref('Register')
-    const user= ref(null)
-     
-  
-   
-    $q.dark.set(true)
+  data() {
+    const $q = useQuasar();
+    const mode = ref("Register");
+    const user = ref(null);
+    const eventList = ref([]);
+    const activeScreen = ref("list");
+
+    $q.dark.set(true);
     return {
-       mode:ref('login'),
-      email: '',
-      username: '',
-      password: '',
-      activeScreen:'list',
-      events:[],
-      selectedEvent:null,
+      mode: ref("login"),
+      email: "",
+      username: "",
+      password: "",
+      activeScreen: "list",
+      events: [],
+      selectedEvent: null,
+      eventList,
+      activeScreen,
       lorem:
-         "This is demo event for testing purposes only. These events will be driven from backend services dynamically.This is demo event fir testing urposes only. These events will be driven from backend services dynamically.",
-     };
-    }
-    ,
-    methods:{
-    onEventClick(event){
-
-      debugger;
-      this.selectedEvent=event;
-      this.activeScreen='details:'
-
+        "This is demo event for testing purposes only. These events will be driven from backend services dynamically.This is demo event fir testing urposes only. These events will be driven from backend services dynamically.",
+    };
+  },
+  computed: {
+    computedEventList() {
+      return this.eventList;
     },
-     submit(event)
-    { // alert(JSON.stringify(event))
+  },
+  methods: {
+    onEventClick(event) {
+      debugger;
+      this.selectedEvent = event;
+      this.activeScreen = "details:";
+    },
+    submit(event) {
+      // alert(JSON.stringify(event))
       //debugger;
-    let email= this.email;
-    let password= this.password;
-    if(this.mode==='login')
-    { signInWithEmailAndPassword(auth,email,password).then((res) => {
-      if(res !=null && res!=undefined && res.user.uid !=null && res.user.uid!=undefined)
-      alert("Login successful")
-      }).catch((err)=>
-      {alert(err.message)})
-      onAuthStateChanged(auth, currentUser =>{
-      this.user=currentUser
-    })
-    }
-    else{ createUserWithEmailAndPassword(auth,email,password).then((res) => {
-      if(res !=null && res!=undefined && res.user.uid !=null && res.user.uid!=undefined)
-      alert("User registered successful")
-      }).catch((err)=>
-      {
-     alert( err.message)})}
-    
+      let email = this.email;
+      let password = this.password;
+      if (this.mode === "login") {
+        signInWithEmailAndPassword(auth, email, password)
+          .then((res) => {
+            if (
+              res != null &&
+              res != undefined &&
+              res.user.uid != null &&
+              res.user.uid != undefined
+            )
+              alert("Login successful");
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+        onAuthStateChanged(auth, (currentUser) => {
+          this.user = currentUser;
+        });
+      } else {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((res) => {
+            if (
+              res != null &&
+              res != undefined &&
+              res.user.uid != null &&
+              res.user.uid != undefined
+            )
+              alert("User registered successful");
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+      }
+    },
+    toggleMode(val) {
+      this.mode = val;
+    },
   },
-   toggleMode(val){
-      this.mode=val
-           
-    }   
-   
-  
-  }
-  /* ,
   mounted() {
-    this.events= response;
+    const catsRef = collection(db, "RSVPEvents");
+    //const objcategories = [];
+    onSnapshot(catsRef, (snapshot) => {
+      this.eventList = [];
+      snapshot.docs.forEach((doc) => {
+        this.eventList.push({ ...doc.data(), id: doc.id });
+      });
+    });
   },
-  beforeCreate(){
-
-  } */
-  });
- 
-  
-
+};
 </script>
