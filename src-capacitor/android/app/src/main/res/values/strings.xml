@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">eventapp</string>
-    <string name="title_activity_main">eventapp</string>
+    <string name="title_activity_main">Mymanu_event</string>
     <string name="package_name">com.ceh.eventapp</string>
     <string name="custom_url_scheme">com.ceh.eventapp</string>
 </resources>

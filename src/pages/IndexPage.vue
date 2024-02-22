@@ -41,8 +41,8 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Blue Tower</q-item-label>
-            <q-item-label caption>Host Social, Media city M54UF Manchester</q-item-label>
+            <q-item-label @click="onnavigation('Host Social Media City Uk Salford England M50 2ST')">Blue Tower, </q-item-label>
+            <q-item-label caption>Host Social, Media City Uk, Salford, England, M50 2ST</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -170,19 +170,7 @@
    <div @click="toggleMode(mode==='login' ? 'register' : 'login')">{{ mode==='login' ? 'Not a user? Register' : 'Already a user? Login'}}</div>
   </q-form>
 </div>
-    <q-footer rounded>
-      <q-tabs
-        no-caps
-        active-color="primary"
-        indicator-color="transparent"
-        class="text-grey-8"
-        v-model="tab"
-      >
-        <q-tab name="images"><img src="icons/50.png"></q-tab>
-        <q-tab name="videos"> <img src="icons/panel.png"></q-tab>
-        <q-tab name="articles"><img src="icons/profile.png"></q-tab>
-      </q-tabs>
-    </q-footer>
+    
   </q-page>
 </template>
 
@@ -193,6 +181,7 @@ import RegisterUser from 'src/components/RegisterUser.vue'
 import {auth} from 'src/firebase.js'
 import {createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut, onAuthStateChanged} from 'firebase/auth'
 import {ref} from 'vue'
+//import launchnavigator from 'node_modules/uk.co.workingedge.phonegap.plugin.launchnavigator/src/android/LaunchNavigatorPlugin.java'
 export default ({
   name: "IndexPage",
   components:{

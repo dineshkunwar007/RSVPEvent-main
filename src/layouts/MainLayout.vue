@@ -47,6 +47,18 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer >
+      <q-tabs v-model="tab"
+        no-caps
+        outside-arrows
+        mobile-arrows
+        class="bg-primary text-white shadow-2"
+      >
+        <q-tab name="images"><img src="icons/50.png"></q-tab>
+        <q-tab name="videos"> <img src="icons/panel.png"></q-tab>
+        <q-tab name="articles"><img src="icons/profile.png"></q-tab>
+      </q-tabs>
+    </q-footer>
   </q-layout>
 </template>
 
