@@ -157,7 +157,7 @@
     <!-- login/register end-->
 <div class="q-pa-md row items-start q-gutter-md" >
 
-  <div v-if="user" >{{ user?.email}}<button @click="signout">Sign Out</button></div>
+  <div v-if="user" >{{ user.email}}<q-btn @click="signout">Sign Out</q-btn></div>
   <q-form @submit.prevent="submit">
   <div>
   <q-input v-model="email" type="email" placeholder="Enter Email">
@@ -201,18 +201,11 @@ export default ({
   data(){
     const $q = useQuasar()
     const mode= ref('Register')
-    const user= ref(null)    
-    
-    async function signout()
-    {
-
-      await signOut(auth).then((res) => {
-        console.log(res)
-      }).catch((err)=>
-      {console.log(err)})
-    }
+    const user= ref(null)
+     
+  
    
-    $q.dark.set(false)
+    $q.dark.set(true)
     return {
        mode:ref('login'),
       email: '',
@@ -241,23 +234,26 @@ export default ({
     let password= this.password;
     if(this.mode==='login')
     { signInWithEmailAndPassword(auth,email,password).then((res) => {
-       // console.log(res)
+      if(res !=null && res!=undefined && res.user.uid !=null && res.user.uid!=undefined)
+      alert("Login successful")
       }).catch((err)=>
       {alert(err.message)})
     }
     else{ createUserWithEmailAndPassword(auth,email,password).then((res) => {
-       alert( JSON.stringify(res)) }).catch((err)=>
+      if(res !=null && res!=undefined && res.user.uid !=null && res.user.uid!=undefined)
+      alert("User registered successful")
+      }).catch((err)=>
       {
      alert( err.message)})}
-   // register(email,password)
+     onAuthStateChanged(auth, currentUser =>{
+      this.user=currentUser
+    })
   },
    toggleMode(val){
       this.mode=val
            
-    },     
-    onAuthStateChanged(auth, currentUser){
-this.user=currentUser
-  }
+    }   
+   
   
   }
   /* ,
@@ -270,16 +266,5 @@ this.user=currentUser
   });
  
   
-//   setup() {
-  
-//     const $q = useQuasar()
 
-// // calling here; equivalent to when component is created
-// $q.dark.set(true)
-//     return {
-//       lorem:
-//         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-//     };
-//   },
-//);
 </script>

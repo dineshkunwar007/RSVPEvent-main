@@ -40,8 +40,7 @@
         />
         <q-toggle
       :label="`Dark theme enabled: ${blueModel}`"
-      v-model="blueModel"  @click="onEventClick(blueModel)"
-    />
+      v-model="blueModel"  @update:model-value="onToggleChange"  />
       </q-list>
     </q-drawer>
 
@@ -54,7 +53,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-
+import { event, useQuasar,Dark  } from 'quasar'
 const linksList = [
   {
     title: 'Docs',
@@ -109,7 +108,7 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
-
+    
     return {
       blueModel: ref(true),
       essentialLinks: linksList,
@@ -120,13 +119,13 @@ export default defineComponent({
     }
   },
   methods:{
-    onEventClick(blueModel){
-      
-     if(blueModel)
-     $q.dark.set(true)
+    onToggleChange(newValue) {
+     
+      if(newValue)
+      Dark.set(true)
     else
-    $q.dark.set(false)
-
-    }}
+    Dark.set(false)
+    }
+  }
 })
 </script>
