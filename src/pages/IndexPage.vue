@@ -1,5 +1,107 @@
 <template>
+
   <q-page class="flex">
+    <div>
+  <div v-if="user">Signed In User: {{ user }}</div>
+  <div v-if="loginstatus=='true'">
+        <q-btn @click="handleSignOut()" >Sign Out</q-btn>
+      </div>
+</div>
+    <!-- <div v-if="loginstatus=='false'" class="q-pa-md row items-start q-gutter-md">
+      <div v-if="user">
+        {{ user.email }}<q-btn @click="signout">Sign Out</q-btn>
+      </div>
+      <q-form @submit.prevent="submit">
+        <div>
+          <q-input v-model="email" type="email" placeholder="Enter Email">
+            <template v-slot:prepend> <q-icon name="email" /> </template
+          ></q-input>
+        </div>
+        <div>
+          <q-input
+            v-model="password"
+            type="password"
+            rea
+            placeholder="Enter password"
+          >
+            <template v-slot:prepend> <q-icon name="password" /> </template
+          ></q-input>
+        </div>
+        <q-btn type="submit">{{
+          mode === "login" ? "Login" : "Register"
+        }}</q-btn>
+        <div @click="toggleMode(mode === 'login' ? 'register' : 'login')">
+          {{
+            mode === "login" ? "Not a user? Register" : "Already a user? Login"
+          }}
+        </div>
+      </q-form>
+    </div> -->
+    
+    <div v-if="loginstatus=='false'"  style="position: fixed;
+    left:50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width:max-content;
+    height:max-content">
+    
+     
+        <q-card class="my-card">
+          <q-card-section class="bg-deep-purple-7">
+            <h4 class="text-h5 text-white q-my-md"> Please login or register below </h4>
+            
+          </q-card-section>
+          <q-card-section>
+            <q-form  @submit.prevent="submit" class="q-px-sm q-pt-xl">
+              <q-input square clearable v-model="email" type="email"  label="Email">
+                <template v-slot:prepend>
+                  <q-icon name="email" />
+                </template>
+              </q-input>
+              <q-input square clearable v-model="password" type="password" label="Password">
+                <template v-slot:prepend>
+                  <q-icon name="lock" />
+                </template>
+              </q-input>
+              <br><br>
+              <q-card-actions class="q-px-lg">
+            <q-btn type="submit" unelevated size="lg" color="purple-4" class="full-width text-white">{{
+          mode === "login" ? "Login" : "Register"
+        }}</q-btn>
+           
+          </q-card-actions>
+            </q-form>
+            
+          </q-card-section>
+          
+          <q-card-section>
+            <div class="text-center q-pa-md q-gutter-md">
+             
+              <q-btn class="transparent" @click="googleSignIn()" >
+              
+                <img src="icons/icons8-google-48.png"/>           </q-btn>
+              <q-btn @click="twitterSignIn()" >
+                <img src="icons/icons8-twitter-48.png"/>
+              </q-btn>
+              <q-btn @click="facebookSignIn()">
+                <img src="icons/icons8-facebook-logo-48.png"/>
+              </q-btn>
+            </div>
+          </q-card-section>
+          
+          <q-card-section class="text-center q-pa-sm">
+            <!-- <p class="text-grey-6">Forgot your password?</p> -->
+            <div class="text-grey-6" style="-webkit-text-fill-color:grey;text-decoration-color: chocolate;" @click="toggleMode(mode === 'login' ? 'register' : 'login')">
+          {{
+            mode === "login" ? "Don't have an account? Register here":"Already a user? Login"
+          }}
+        </div>
+          </q-card-section>
+        </q-card>
+        
+     
+    </div> 
+    <div v-else>
     <div
       class="q-pa-md row items-start q-gutter-md"
       v-if="activeScreen == 'list'"
@@ -73,122 +175,8 @@
         </q-list>
       </q-card>
     </div>
-
-    <!-- login/register strt-->
-    <!-- <div class="column q-pa-lg">
-      <div class="row">
-        <q-card square class="shadow-24" style="width:300px;height:485px;">
-          <q-card-section class="bg-deep-purple-7">
-            <h4 class="text-h5 text-white q-my-md">Event Login</h4>
-            <div class="absolute-bottom-right q-pr-md" style="transform: translateY(50%);">
-              <q-btn fab icon="add" color="purple-4" />
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <q-form class="q-px-sm q-pt-xl">
-              <q-input square clearable v-model="email" type="email" label="Email">
-                <template v-slot:prepend>
-                  <q-icon name="email" />
-                </template>
-              </q-input>
-              <q-input square clearable v-model="password" type="password" label="Password">
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-              </q-input>
-            </q-form>
-          </q-card-section>
-          <q-card-section>
-            <div class="text-center q-pa-md q-gutter-md">
-              <q-btn round color="indigo-7">
-                <q-icon name="fab fa-facebook-f" size="1.2rem" />
-              </q-btn>
-              <q-btn round color="red-8">
-                <q-icon name="fab fa-google-plus-g" size="1.2rem" />
-              </q-btn>
-              <q-btn round color="light-blue-5">
-                <q-icon name="fab fa-twitter" size="1.2rem" />
-              </q-btn>
-            </div>
-          </q-card-section>
-          <q-card-actions class="q-px-lg">
-            <q-btn unelevated size="lg" color="purple-4" class="full-width text-white" label="Sign In" />
-          </q-card-actions>
-          <q-card-section class="text-center q-pa-sm">
-            <p class="text-grey-6">Forgot your password?</p>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
-    <div class="column q-pa-lg">
-      <div class="row">
-        <q-card square class="shadow-24" style="width:300px;height:485px;">
-          <q-card-section class="bg-deep-purple-7">
-            <h4 class="text-h5 text-white q-my-md">Event Registration</h4>
-            <div class="absolute-bottom-right q-pr-md" style="transform: translateY(50%);">
-              <q-btn fab icon="close" color="purple-4" />
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <q-form class="q-px-sm q-pt-xl q-pb-lg">
-              <q-input square clearable v-model="email" type="email" label="Email">
-                <template v-slot:prepend>
-                  <q-icon name="email" />
-                </template>
-              </q-input>
-              <q-input square clearable v-model="username" type="username" label="Username">
-                <template v-slot:prepend>
-                  <q-icon name="person" />
-                </template>
-              </q-input>
-              <q-input square clearable v-model="password" type="password" label="Password">
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-              </q-input>
-            </q-form>
-          </q-card-section>
-          <q-card-actions class="q-px-lg">
-            <q-btn unelevated size="lg" color="purple-4" class="full-width text-white" label="Get Started" />
-          </q-card-actions>
-          <q-card-section class="text-center q-pa-sm">
-            <p class="text-grey-6">Return to login</p>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div> -->
-    <!-- login/register end-->
-    <div class="q-pa-md row items-start q-gutter-md">
-      <div v-if="user">
-        {{ user.email }}<q-btn @click="signout">Sign Out</q-btn>
-      </div>
-      <q-form @submit.prevent="submit">
-        <div>
-          <q-input v-model="email" type="email" placeholder="Enter Email">
-            <template v-slot:prepend> <q-icon name="email" /> </template
-          ></q-input>
-        </div>
-        <div>
-          <q-input
-            v-model="password"
-            type="password"
-            rea
-            placeholder="Enter password"
-          >
-            <template v-slot:prepend> <q-icon name="password" /> </template
-          ></q-input>
-        </div>
-        <q-btn type="submit">{{
-          mode === "login" ? "Login" : "Register"
-        }}</q-btn>
-        <div @click="toggleMode(mode === 'login' ? 'register' : 'login')">
-          {{
-            mode === "login" ? "Not a user? Register" : "Already a user? Login"
-          }}
-        </div>
-      </q-form>
-    </div>
-    <q-footer rounded>
+  </div>     
+   <div> <q-footer rounded v-if="activeScreen == 'list'||activeScreen == 'details:' ">
       <q-tabs
         no-caps
         active-color="primary"
@@ -196,12 +184,14 @@
         class="text-grey-8"
         v-model="tab"
       >
-        <q-tab name="images"><img src="icons/50.png" /></q-tab>
+        <q-tab @click="onHomeClick" name="images"><img src="icons/50.png" /></q-tab>
         <q-tab name="videos"> <img src="icons/panel.png" /></q-tab>
         <q-tab name="articles"><img src="icons/profile.png" /></q-tab>
       </q-tabs>
-    </q-footer>
+    </q-footer></div>
+ 
   </q-page>
+  
 </template>
 
 <script>
@@ -221,10 +211,11 @@ import { addDoc, onSnapshot, doc, updateDoc } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
+  signOut,getAuth,
+  onAuthStateChanged,GoogleAuthProvider,signInWithPopup,FacebookAuthProvider,TwitterAuthProvider
 } from "firebase/auth";
 import { ref } from "vue";
+import { FirebaseError } from "firebase/app";
 export default {
   name: "IndexPage",
   components: {
@@ -236,6 +227,7 @@ export default {
     const user = ref(null);
     const eventList = ref([]);
     const activeScreen = ref("list");
+    const loginstatus= ref("false");
 
     $q.dark.set(true);
     return {
@@ -248,6 +240,7 @@ export default {
       selectedEvent: null,
       eventList,
       activeScreen,
+      loginstatus,
       lorem:
         "This is demo event for testing purposes only. These events will be driven from backend services dynamically.This is demo event fir testing urposes only. These events will be driven from backend services dynamically.",
     };
@@ -258,10 +251,55 @@ export default {
     },
   },
   methods: {
+    handleSignOut()  {
+     
+        signOut(auth).then(() => {
+         // Sign-out successful.
+         this.user = null;
+         this.loginstatus="false";
+        alert('User Signed out');
+        
+        }).catch((error) => {
+          // An error happened.
+          alert(error.message);
+        });
+      },
+    googleSignIn(){
+      const provider=new GoogleAuthProvider();
+      
+      const auth=getAuth();
+     
+       signInWithPopup(auth,provider).then((result)=>{
+        alert("signed in successfully");
+        this.user = result.user.displayName;
+       this.loginstatus="true";}).catch(error=>{alert(error.message)});
+    },
+    twitterSignIn(){
+      
+      const provider =new TwitterAuthProvider();
+      const auth=getAuth();
+     
+       signInWithPopup(auth,provider).then((result)=>{alert("signed in successfully");
+       this.user = result.user.displayName;
+       this.loginstatus="true";}).catch(error=>{alert(error.message)});
+  
+    },
+    facebookSignIn(){
+     const provider=new FacebookAuthProvider();
+      
+    
+      signInWithPopup(auth,provider).then((result)=>{alert("signed in successfully");
+      this.user = result.user.displayName;
+      this.loginstatus="true";}).catch(error=>{alert(error.message)});
+  },
     onEventClick(event) {
       debugger;
       this.selectedEvent = event;
       this.activeScreen = "details:";
+    },
+    onHomeClick(){
+      if(this.activeScreen == "details:")
+      {this.activeScreen="list";}
     },
     submit(event) {
       // alert(JSON.stringify(event))
@@ -277,13 +315,13 @@ export default {
               res.user.uid != null &&
               res.user.uid != undefined
             )
-              alert("Login successful");
+              alert("Login successful");this.loginstatus="true";
           })
           .catch((err) => {
             alert(err.message);
           });
         onAuthStateChanged(auth, (currentUser) => {
-          this.user = currentUser;
+          this.user = currentUser.email;
         });
       } else {
         createUserWithEmailAndPassword(auth, email, password)
@@ -294,7 +332,7 @@ export default {
               res.user.uid != null &&
               res.user.uid != undefined
             )
-              alert("User registered successful");
+              alert("User registered successful");this.loginstatus="true";
           })
           .catch((err) => {
             alert(err.message);

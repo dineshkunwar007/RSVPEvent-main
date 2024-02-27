@@ -8,7 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer" class="q-mr-sm"
+          @click="toggleLeftDrawer" class="q-mr-sm" 
         />
         <q-avatar rounded >
             <img src="icons/mymanu.png">
@@ -40,14 +40,14 @@
         />
         <q-toggle
       :label="`Dark theme enabled: ${blueModel}`"
-      v-model="blueModel"  @update:model-value="onToggleChange"  />
+      v-model="blueModel" val="true" @update:model-value="onToggleChange"  />
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer >
+    <!-- <q-footer >
       <q-tabs v-model="tab"
         no-caps
         outside-arrows
@@ -58,7 +58,7 @@
         <q-tab name="videos"> <img src="icons/panel.png"></q-tab>
         <q-tab name="articles"><img src="icons/profile.png"></q-tab>
       </q-tabs>
-    </q-footer>
+    </q-footer> -->
   </q-layout>
 </template>
 
