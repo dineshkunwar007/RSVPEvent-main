@@ -7,37 +7,10 @@
         <q-btn @click="handleSignOut()" >Sign Out</q-btn>
       </div>
 </div>
-    <!-- <div v-if="loginstatus=='false'" class="q-pa-md row items-start q-gutter-md">
-      <div v-if="user">
-        {{ user.email }}<q-btn @click="signout">Sign Out</q-btn>
-      </div>
-      <q-form @submit.prevent="submit">
-        <div>
-          <q-input v-model="email" type="email" placeholder="Enter Email">
-            <template v-slot:prepend> <q-icon name="email" /> </template
-          ></q-input>
-        </div>
-        <div>
-          <q-input
-            v-model="password"
-            type="password"
-            rea
-            placeholder="Enter password"
-          >
-            <template v-slot:prepend> <q-icon name="password" /> </template
-          ></q-input>
-        </div>
-        <q-btn type="submit">{{
-          mode === "login" ? "Login" : "Register"
-        }}</q-btn>
-        <div @click="toggleMode(mode === 'login' ? 'register' : 'login')">
-          {{
-            mode === "login" ? "Not a user? Register" : "Already a user? Login"
-          }}
-        </div>
-      </q-form>
-    </div> -->
-    
+<!-- style="position: absolute;
+right: 10px;
+top: 5px;" 
+        -->
     <div v-if="loginstatus=='false'"  style="position: fixed;
     left:50%;
     top: 50%;
@@ -47,10 +20,10 @@
     
      
         <q-card class="my-card">
-          <q-card-section class="bg-deep-purple-7">
+          <!-- <q-card-section class="bg-deep-purple-7">
             <h4 class="text-h5 text-white q-my-md"> Please login or register below </h4>
             
-          </q-card-section>
+          </q-card-section> -->
           <q-card-section>
             <q-form  @submit.prevent="submit" class="q-px-sm q-pt-xl">
               <q-input square clearable v-model="email" type="email"  label="Email">
@@ -108,7 +81,7 @@
       v-for="objEvent in computedEventList"
       :key="objEvent.id"
     >
-      <q-card class="my-card" @click="onEventClick(i)">
+      <q-card class="my-card" @click="onEventClick(objEvent)">
         <img :src="objEvent.eventImg" />
 
         <q-card-section>
@@ -124,20 +97,98 @@
 
       <!-- EVENT Details end-->
     </div>
-    <div v-else>
+    <div id="dvdetail" v-else>
       <RegisterUser :name="activeScreen"></RegisterUser>
+      <div class="">
+        <q-card>
+    <q-carousel
+      swipeable
+      animated
+      v-model="slide"
+      :autoplay="autoplay"
+      ref="carousel"
+      infinite
+    >
+      <q-carousel-slide :name="1" img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/img.jpg?alt=media&token=546b6d33-c513-444e-ad56-d892dee94028"/>
+      <q-carousel-slide :name="2" img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/demo.jpg?alt=media&token=41ac12ce-8687-423c-a5d1-9ffc59ca626a" />
+      <q-carousel-slide :name="3" img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/ces.jpg?alt=media&token=6e88e5a5-10b3-4cc3-b12d-80b3a6293f2a" />
+      <q-carousel-slide :name="4" img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/HYD03944.jpg?alt=media&token=3e1a1faf-d7af-472a-af42-28329374bc00" />
+      <q-carousel-slide :name="4" img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/HYD03946.jpg?alt=media&token=99b4f9dc-77c4-40a8-a56f-e204ae7a4c11" />
+
+      <template v-slot:control>
+        <q-carousel-control
+          position="top-right"
+          :offset="[18, 18]"
+          class="text-white rounded-borders"
+          style="background: rgba(0, 0, 0, .3); padding: 4px 8px;"
+        >
+          <q-toggle dense dark color="orange" v-model="autoplay" label="Auto Play" />
+        </q-carousel-control>
+
+        <q-carousel-control
+          position="bottom-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
+        >
+          <q-btn
+            push round dense color="orange" text-color="black" icon="arrow_left"
+            @click="$refs.carousel.previous()"
+          />
+          <q-btn
+            push round dense color="orange" text-color="black" icon="arrow_right"
+            @click="$refs.carousel.next()"
+          />
+        </q-carousel-control>
+      </template>
+    </q-carousel></q-card>
+  </div>
       <q-card class="my-card">
-        <img src="https://cdn.quasar.dev/img/parallax2.jpg" />
+        <!-- <img src="https://cdn.quasar.dev/img/parallax2.jpg" /> -->
 
         <q-list style="align-items: baseline">
+        <q-item> <q-item-section>
+              
+              <q-item-label caption
+                >{{selectedEvent.eventTitle}}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+          <q-item> <q-item-section>
+              
+              <q-item-label caption
+                >{{selectedEvent.eventSummary}}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+          <q-item> <q-item-section>
+            
+              <q-item-label caption
+                >{{"Contact person: "+selectedEvent.contactPerson}}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+          <q-item> <q-item-section>
+             
+              <q-item-label caption
+                >{{"Contact number: "+selectedEvent.contactPhone}}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+          <q-item> <q-item-section>
+             
+              <q-item-label caption
+                >{{"Tickets remaining: "+selectedEvent.totalseat}}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
           <q-item clickable>
             <q-item-section avatar>
               <q-icon color="primary" name="date_range" />
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>01/04/2024</q-item-label>
-              <q-item-label caption>10:00AM - 3:00PM</q-item-label>
+              <q-item-label>{{selectedEvent.eventDate}}</q-item-label>
+              <q-item-label caption>{{selectedEvent.eventTime}}</q-item-label>
             </q-item-section>
           </q-item>
 
@@ -147,9 +198,9 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>Blue Tower</q-item-label>
+              <q-item-label>Event venue</q-item-label>
               <q-item-label caption
-                >Host Social, Media city M54UF Manchester</q-item-label
+                >{{selectedEvent.eventLocation}}</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -169,13 +220,77 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label>Book your ticket</q-item-label>
+              <q-item-label @click="Bookticket('yes')">Book your ticket</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
       </q-card>
     </div>
-  </div>     
+  </div>   
+   <div v-if="isbooking=='true'" class="q-pa-md">
+    <q-card class="my-card">
+    <q-form
+      @submit="onSubmit"
+      @reset="onReset"
+      class="q-gutter-md"
+    >
+      <q-input
+        filled
+        v-model="BookEvent.AttendeeName"
+        label="Your name *"
+    
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Please type your full name']"
+      />
+       <q-select filled v-model="BookEvent.Gender" 
+      :options="options" label="Gender"
+    
+       />
+       <q-input type="email"
+        filled
+        v-model="BookEvent.Personemail"
+        label="Your email address *"
+     
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Please type your email adddress']"
+      />
+      <q-input
+        filled
+        type="number"
+        v-model="BookEvent.PhoneNumber"
+        label="Contact number *"
+        lazy-rules
+        :rules="[
+          val => val !== null && val !== '' || 'Please type your contact number',
+        
+        ]"
+      />
+      <q-input
+        filled
+        v-model="BookEvent.Dietpreference"
+        label="Do you have any diet preference ?"/>
+        <q-input
+        filled
+        type="number"
+        v-model="BookEvent.AccompaniedBy"
+        label="How many people are you accompanying with ?"
+        lazy-rules
+        :rules="[
+          
+          val => val < 5 || 'Maximum of 4 people can be accompanied with.'
+        
+        ]"
+      />
+
+      <q-toggle v-model="accept" label="I agree and consent to receiving updates about the event." />
+
+      <div style="float:right">
+        <q-btn label="Book a ticket" type="submit" color="primary"/>
+        <q-btn label="Reset the entries" type="reset" color="primary" flat class="q-ml-sm" />
+      </div>
+    </q-form>
+    </q-card>
+  </div>  
    <div> <q-footer rounded v-if="activeScreen == 'list'||activeScreen == 'details:' ">
       <q-tabs
         no-caps
@@ -196,7 +311,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { event, useQuasar } from "quasar";
+import { event, useQuasar,Notify } from "quasar";
 import RegisterUser from "src/components/RegisterUser.vue";
 import { auth } from "src/firebase.js";
 import {
@@ -212,7 +327,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,getAuth,
-  onAuthStateChanged,GoogleAuthProvider,signInWithPopup,FacebookAuthProvider,TwitterAuthProvider
+  onAuthStateChanged,GoogleAuthProvider,signInWithPopup,FacebookAuthProvider,TwitterAuthProvider,signInWithRedirect
 } from "firebase/auth";
 import { ref } from "vue";
 import { FirebaseError } from "firebase/app";
@@ -228,10 +343,30 @@ export default {
     const eventList = ref([]);
     const activeScreen = ref("list");
     const loginstatus= ref("false");
-
+    const accept = ref(false)
+    const BookEvent={
+      /* AttendeeName:"Deepak",
+      PhoneNumber:"0123131263",
+      Personemail:"danny@mymanu.co.uk",
+      Gender:"Male",
+      Dietpreference:"NA",
+      AccompaniedBy:"4" */
+    };
+    const slide= ref(1);
+    const  autoplay= ref(true);
+    const isbooking=ref("false");
+    
     $q.dark.set(true);
     return {
       mode: ref("login"),
+      BookEvent:{
+      AttendeeName:"",
+      PhoneNumber:"",
+      Personemail:"",
+      Gender:"",
+      Dietpreference:"",
+      AccompaniedBy:""
+    },
       email: "",
       username: "",
       password: "",
@@ -241,9 +376,13 @@ export default {
       eventList,
       activeScreen,
       loginstatus,
-      lorem:
-        "This is demo event for testing purposes only. These events will be driven from backend services dynamically.This is demo event fir testing urposes only. These events will be driven from backend services dynamically.",
-    };
+      accept,
+      isbooking,
+      slide: ref(1),
+      autoplay: ref(true),
+            options: [
+        'Male', 'Female', 'Other']
+        };
   },
   computed: {
     computedEventList() {
@@ -251,12 +390,70 @@ export default {
     },
   },
   methods: {
+    Bookticket(yes){
+      this.isbooking="true";
+      const divElement = document.getElementById('dvdetail');
+      divElement.style.display="none";
+
+
+    },
+    onSubmit () {
+      
+     
+        if (this.accept !== true) {
+          Notify.create({
+            color: 'red-5',
+            textColor: 'white',
+            icon: 'warning',
+            message: 'Please accept the terms first.'
+          })
+        }
+        else {
+          const EventsDocRef = collection(db, "booking");
+       addDoc(EventsDocRef, this.BookEvent).then((result) => {
+        alert(JSON.stringify(result))
+     this.BookEvent = {
+      AttendeeName:"",
+      PhoneNumber:"",
+      Personemail:"",
+      Gender:"",
+      Dietpreference:"",
+      AccompaniedBy:""
+            };
+      this.accept=false;
+            
+          }).catch(error=>{alert(error.message)});
+          
+          Notify.create({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: 'Submitted'
+          })
+          this.activeScreen="list";
+      this.isbooking="false";
+        } 
+      },
+
+      onReset () {
+        this.BookEvent = {
+      AttendeeName:"",
+      PhoneNumber:"",
+      Personemail:"",
+      Gender:"",
+      Dietpreference:"",
+      AccompaniedBy:""
+            };
+      this.accept=false;
+      },
     handleSignOut()  {
      
         signOut(auth).then(() => {
          // Sign-out successful.
          this.user = null;
          this.loginstatus="false";
+         this.isbooking="false";
+         this.activeScreen="list";
         alert('User Signed out');
         
         }).catch((error) => {
@@ -265,21 +462,23 @@ export default {
         });
       },
     googleSignIn(){
-      const provider=new GoogleAuthProvider();
+       const provider=new GoogleAuthProvider();
       
       const auth=getAuth();
      
        signInWithPopup(auth,provider).then((result)=>{
         alert("signed in successfully");
         this.user = result.user.displayName;
-       this.loginstatus="true";}).catch(error=>{alert(error.message)});
+       this.loginstatus="true";}).catch(error=>{alert(error.message)});   
+      
+      
     },
     twitterSignIn(){
       
       const provider =new TwitterAuthProvider();
       const auth=getAuth();
      
-       signInWithPopup(auth,provider).then((result)=>{alert("signed in successfully");
+      signInWithRedirect(auth,provider).then((result)=>{alert("signed in successfully");
        this.user = result.user.displayName;
        this.loginstatus="true";}).catch(error=>{alert(error.message)});
   
@@ -292,14 +491,15 @@ export default {
       this.user = result.user.displayName;
       this.loginstatus="true";}).catch(error=>{alert(error.message)});
   },
-    onEventClick(event) {
-      debugger;
-      this.selectedEvent = event;
+    onEventClick(objEvent) {
+      
+      this.selectedEvent = objEvent;
       this.activeScreen = "details:";
     },
     onHomeClick(){
       if(this.activeScreen == "details:")
       {this.activeScreen="list";}
+      this.isbooking="false";
     },
     submit(event) {
       // alert(JSON.stringify(event))
