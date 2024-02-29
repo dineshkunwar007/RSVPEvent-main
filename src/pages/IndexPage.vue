@@ -291,6 +291,15 @@ top: 5px;"
     </q-form>
     </q-card>
   </div>  
+  <div id="dvqr" style="margin:auto; width: 50%">
+        <canvas id="qr-code"></canvas>
+        <q-btn square  label="share" @click="shareCanvas()">
+                <template v-slot:prepend>
+                  <q-icon name="share" />
+                </template>
+              </q-btn>
+        
+  </div>
    <div> <q-footer rounded v-if="activeScreen == 'list'||activeScreen == 'details:' ">
       <q-tabs
         no-caps
@@ -331,6 +340,7 @@ import {
 } from "firebase/auth";
 import { ref } from "vue";
 import { FirebaseError } from "firebase/app";
+import QRious from "qrious";
 export default {
   name: "IndexPage",
   components: {
@@ -379,6 +389,7 @@ export default {
       accept,
       isbooking,
       slide: ref(1),
+     
       autoplay: ref(true),
             options: [
         'Male', 'Female', 'Other']
@@ -390,6 +401,25 @@ export default {
     },
   },
   methods: {
+    async shareCanvas() {
+  const canvasElement = document.getElementById('qr-code');
+  const dataUrl = canvasElement.toDataURL();
+  const blob =  await (await fetch(dataUrl)).blob();
+  const filesArray = [
+    new File(
+      [blob],
+      'ticket.png',
+      {
+        type: blob.type,
+        lastModified: new Date().getTime()
+      }
+    )
+  ];
+  const shareData = {
+    files: filesArray,
+  };
+  navigator.share(shareData);
+},
     Bookticket(yes){
       this.isbooking="true";
       const divElement = document.getElementById('dvdetail');
@@ -411,7 +441,8 @@ export default {
         else {
           const EventsDocRef = collection(db, "booking");
        addDoc(EventsDocRef, this.BookEvent).then((result) => {
-        alert(JSON.stringify(result))
+       if(result._key.path!=null && result._key.path!=undefined)
+       {
      this.BookEvent = {
       AttendeeName:"",
       PhoneNumber:"",
@@ -421,17 +452,20 @@ export default {
       AccompaniedBy:""
             };
       this.accept=false;
-            
+      new QRious({
+          level: "H",
+          padding: 25,
+          size: 300,
+          element:document.getElementById("qr-code"),
+          value: result._key.path.segments[1],
+        });
+           /* this.activeScreen="list";
+      this.isbooking="false"; */
+      }
           }).catch(error=>{alert(error.message)});
           
-          Notify.create({
-            color: 'green-4',
-            textColor: 'white',
-            icon: 'cloud_done',
-            message: 'Submitted'
-          })
-          this.activeScreen="list";
-      this.isbooking="false";
+             
+      
         } 
       },
 
@@ -478,7 +512,7 @@ export default {
       const provider =new TwitterAuthProvider();
       const auth=getAuth();
      
-      signInWithRedirect(auth,provider).then((result)=>{alert("signed in successfully");
+      signInWithPopup(auth,provider).then((result)=>{alert("signed in successfully");
        this.user = result.user.displayName;
        this.loginstatus="true";}).catch(error=>{alert(error.message)});
   
@@ -487,7 +521,7 @@ export default {
      const provider=new FacebookAuthProvider();
       
     
-      signInWithPopup(auth,provider).then((result)=>{alert("signed in successfully");
+     signInWithRedirect(auth,provider).then((result)=>{alert("signed in successfully");
       this.user = result.user.displayName;
       this.loginstatus="true";}).catch(error=>{alert(error.message)});
   },
