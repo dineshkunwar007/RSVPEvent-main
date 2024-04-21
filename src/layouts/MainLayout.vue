@@ -1,6 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf"   class="shadow-2 rounded-borders">
-    <q-header elevated>
+    <div v-if="activeScreen == 'list'||activeScreen == 'details:' || loginstatus!='true'">
+    <q-header bordered class="bg-grey-3 text-primary" elevated>
       <q-toolbar>
         <q-btn
           flat
@@ -8,18 +9,18 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer" class="q-mr-sm" 
+          @click="toggleLeftDrawer" class="q-mr-sm" style="color: red;"
         />
         <q-avatar rounded >
             <img src="icons/mymanu.png">
           </q-avatar>
-        <q-toolbar-title>
+        <q-toolbar-title style="color: red;">
           Mymanu Events
         </q-toolbar-title>
 
        <!--  <div>Mymanu v{{ $q.version }}</div> -->
       </q-toolbar>
-    </q-header>
+    </q-header></div>
 
     <q-drawer
       v-model="leftDrawerOpen"
@@ -123,6 +124,7 @@ export default defineComponent({
   methods:{
     onToggleChange(newValue) {    
       newValue? Dark.set(true):Dark.set(false)   
+
     }
   }
 })

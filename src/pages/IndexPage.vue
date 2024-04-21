@@ -4,7 +4,7 @@
     <div>
   <div v-if="user">Signed In User: {{ user }}</div>
   <div v-if="loginstatus=='true'">
-        <q-btn @click="handleSignOut()" >Sign Out</q-btn>
+        <q-btn @click="handleSignOut()" color="red" style=" border: 2px solid #f44336; position: absolute;right: 10px;top:0px" icon="logout" >Sign Out</q-btn>
       </div>
 </div>
 <!-- style="position: absolute;
@@ -38,7 +38,7 @@ top: 5px;"
               </q-input>
               <br><br>
               <q-card-actions class="q-px-lg">
-            <q-btn type="submit" unelevated size="lg" color="purple-4" class="full-width text-white">{{
+            <q-btn type="submit" unelevated size="lg" color="red-4" class="full-width text-white">{{
           mode === "login" ? "Login" : "Register"
         }}</q-btn>
            
@@ -52,19 +52,19 @@ top: 5px;"
              
               <q-btn class="transparent" @click="googleSignIn()" >
               
-                <img src="icons/icons8-google-48.png"/>           </q-btn>
+                <img src="icons/icons8-google-50.png"/>           </q-btn>
               <q-btn @click="twitterSignIn()" >
-                <img src="icons/icons8-twitter-48.png"/>
+                <img src="icons/icons8-twitter-50.png"/>
               </q-btn>
               <q-btn @click="facebookSignIn()">
-                <img src="icons/icons8-facebook-logo-48.png"/>
+                <img src="icons/icons8-facebook-50.png"/>
               </q-btn>
             </div>
           </q-card-section>
           
           <q-card-section class="text-center q-pa-sm">
             <!-- <p class="text-grey-6">Forgot your password?</p> -->
-            <div class="text-grey-6" style="-webkit-text-fill-color:grey;text-decoration-color: chocolate;" @click="toggleMode(mode === 'login' ? 'register' : 'login')">
+            <div class="text-red-6" style="-webkit-text-fill-color:grey;text-decoration-color: red;" @click="toggleMode(mode === 'login' ? 'register' : 'login')">
           {{
             mode === "login" ? "Don't have an account? Register here":"Already a user? Login"
           }}
@@ -98,9 +98,9 @@ top: 5px;"
       <!-- EVENT Details end-->
     </div>
     <div id="dvdetail" v-else>
-      <RegisterUser :name="activeScreen"></RegisterUser>
-      <div class="">
-        <q-card>
+     <!--  <RegisterUser :name="activeScreen"></RegisterUser> -->
+      <div class="q-pa-md row items-start q-gutter-md">
+       <q-card class="my-card">
     <q-carousel
       swipeable
       animated
@@ -140,91 +140,71 @@ top: 5px;"
           />
         </q-carousel-control>
       </template>
-    </q-carousel></q-card>
-  </div>
-      <q-card class="my-card">
-        <!-- <img src="https://cdn.quasar.dev/img/parallax2.jpg" /> -->
-
+    </q-carousel>
+      <q-card-section class="q-pt-none">
+          {{ selectedEvent.eventTitle }}
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          {{ selectedEvent.eventSummary }}
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          {{ "Contact person: "+selectedEvent.contactPerson }}
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          {{ "Contact number: "+selectedEvent.contactPhone }}
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          {{ "Tickets remaining: "+selectedEvent.totalseat }}
+        </q-card-section>
+       
         <q-list style="align-items: baseline">
-        <q-item> <q-item-section>
-              
-              <q-item-label caption
-                >{{selectedEvent.eventTitle}}</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-          <q-item> <q-item-section>
-              
-              <q-item-label caption
-                >{{selectedEvent.eventSummary}}</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-          <q-item> <q-item-section>
-            
-              <q-item-label caption
-                >{{"Contact person: "+selectedEvent.contactPerson}}</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-          <q-item> <q-item-section>
-             
-              <q-item-label caption
-                >{{"Contact number: "+selectedEvent.contactPhone}}</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-          <q-item> <q-item-section>
-             
-              <q-item-label caption
-                >{{"Tickets remaining: "+selectedEvent.totalseat}}</q-item-label
-              >
-            </q-item-section>
-          </q-item>
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="primary" name="date_range" />
-            </q-item-section>
+        
+        <q-item clickable>
+           <q-item-section avatar>
+             <q-icon color="primary" name="date_range" />
+           </q-item-section>
 
-            <q-item-section>
-              <q-item-label>{{selectedEvent.eventDate}}</q-item-label>
-              <q-item-label caption>{{selectedEvent.eventTime}}</q-item-label>
-            </q-item-section>
-          </q-item>
+           <q-item-section>
+             <q-item-label>{{selectedEvent.eventDate}}</q-item-label>
+             <q-item-label caption>{{selectedEvent.eventTime}}</q-item-label>
+           </q-item-section>
+         </q-item>
 
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="primary" name="location_on" />
-            </q-item-section>
+         <q-item clickable>
+           <q-item-section avatar>
+             <q-icon color="primary" name="location_on" />
+           </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Event venue</q-item-label>
-              <q-item-label caption
-                >{{selectedEvent.eventLocation}}</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+           <q-item-section>
+             <q-item-label>Event venue</q-item-label>
+             <q-item-label caption
+               >{{selectedEvent.eventLocation}}</q-item-label
+             >
+           </q-item-section>
+         </q-item>
 
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="primary" name="share" />
-            </q-item-section>
+         <q-item clickable>
+           <q-item-section avatar>
+             <q-icon color="primary" name="share" />
+           </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Share</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable>
-            <q-item-section avatar>
-              <q-icon color="primary" name="book_online" />
-            </q-item-section>
+           <q-item-section>
+             <q-item-label>Share</q-item-label>
+           </q-item-section>
+         </q-item>
+         <q-item clickable>
+           <q-item-section avatar>
+             <q-icon color="primary" name="book_online" />
+           </q-item-section>
 
-            <q-item-section>
-              <q-item-label @click="Bookticket('yes')">Book your ticket</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-card>
+           <q-item-section>
+             <q-item-label @click="Bookticket('yes')">Book your ticket</q-item-label>
+           </q-item-section>
+         </q-item>
+       </q-list>
+       </q-card>
+  </div>
+      
     </div>
   </div>   
    <div v-if="isbooking=='true'" class="q-pa-md">
@@ -291,26 +271,64 @@ top: 5px;"
     </q-form>
     </q-card>
   </div>  
-  <div id="dvqr" style="margin:auto; width: 50%">
-        <canvas id="qr-code"></canvas>
-        <q-btn square  label="share" @click="shareCanvas()">
-                <template v-slot:prepend>
-                  <q-icon name="share" />
-                </template>
+  
+  <div id="dvqr" style="margin:50px;display: none; width: 50%">
+    <canvas width="50%" id="qr-code"></canvas>
+    <div style="float:left;">
+    
+        <div>Ticket booked successfully:</div>
+        <q-btn square color="primary" flat class="q-ml-sm" label="share" @click="shareCanvas()">               
+                  <q-icon name="share"  />               
               </q-btn>
+       <q-btn square color="primary" flat class="q-ml-sm" label="close" @click="CloseCanvas()">                
+                  <q-icon name="close" />               
+              </q-btn>
+      </div>
+       
+        
         
   </div>
-   <div> <q-footer rounded v-if="activeScreen == 'list'||activeScreen == 'details:' ">
+  
+  <div id="dvbookedevents"
+      class="q-pa-md row items-start q-gutter-md"
+      v-if="activeScreen == 'bookedevents'"
+      v-for="obj,index in computedbookedList"
+      :key="obj.id"
+    >
+    <q-card  @click="draftcanvasticket(index,obj)" aria-label="please click to view QR tickets" class="my-card">    
+      <canvas width="50%"  id="qr"></canvas> 
+    <q-card-section>
+      <div class="text-subtitle2"> This a ticket for {{ obj.AttendeeName}} with email {{ obj.Personemail}}</div>
+      <div class="text-h6"> Event: {{ obj.EventTitle }}</div>
+          
+        </q-card-section>
+  </q-card>
+      <!-- <q-card class="my-card" @click="onEventClick(objEvent)">
+        <img :src="objEvent.eventImg" />
+
+        <q-card-section>
+          <div class="text-h6">{{ objEvent.eventTitle }}</div>
+          <div class="text-subtitle2">{{ objEvent.createdby }}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          {{ objEvent.eventSummary }}
+        </q-card-section>
+      </q-card> -->
+      <!-- EVENT Details start-->
+
+      <!-- EVENT Details end-->
+    </div>
+   <div v-if="activeScreen == 'details:' ">
+   
+       <q-footer bordered class="bg-grey-3 text-primary" elevated  >
       <q-tabs
-        no-caps
-        active-color="primary"
-        indicator-color="transparent"
-        class="text-grey-8"
+   
         v-model="tab"
       >
-        <q-tab @click="onHomeClick" name="images"><img src="icons/50.png" /></q-tab>
-        <q-tab name="videos"> <img src="icons/panel.png" /></q-tab>
-        <q-tab name="articles"><img src="icons/profile.png" /></q-tab>
+        <q-tab @click="onHomeClick" name="images"><img src="icons/icons8-home-64.png" /></q-tab>
+        <q-tab name="videos"> <img src="icons/icons8-panel-48.png" /></q-tab>
+        <q-tab  @click="onbookedEvents" name="articles"><img src="icons/icons8-user-64.png" /></q-tab>
       </q-tabs>
     </q-footer></div>
  
@@ -351,6 +369,7 @@ export default {
     const mode = ref("Register");
     const user = ref(null);
     const eventList = ref([]);
+    const bookedList = ref([]);
     const activeScreen = ref("list");
     const loginstatus= ref("false");
     const accept = ref(false)
@@ -366,11 +385,13 @@ export default {
     const  autoplay= ref(true);
     const isbooking=ref("false");
     
-    $q.dark.set(true);
+    $q.dark.set(false);
     return {
       mode: ref("login"),
       BookEvent:{
       AttendeeName:"",
+      EventId:"",
+      EventTitle:"",
       PhoneNumber:"",
       Personemail:"",
       Gender:"",
@@ -383,7 +404,7 @@ export default {
       activeScreen: "list",
       events: [],
       selectedEvent: null,
-      eventList,
+      eventList,bookedList,
       activeScreen,
       loginstatus,
       accept,
@@ -397,10 +418,19 @@ export default {
   },
   computed: {
     computedEventList() {
-      return this.eventList;
+      return this.eventList
+     
+    },
+    computedbookedList(){
+      return this.bookedList
     },
   },
   methods: {
+    CloseCanvas() { 
+      const Element = document.getElementById('dvqr');
+      Element.style.display="none"; 
+    this.activeScreen="list";
+      this.isbooking="false";   },
     async shareCanvas() {
   const canvasElement = document.getElementById('qr-code');
   const dataUrl = canvasElement.toDataURL();
@@ -425,10 +455,8 @@ export default {
       const divElement = document.getElementById('dvdetail');
       divElement.style.display="none";
 
-
     },
-    onSubmit () {
-      
+    onSubmit () {     
      
         if (this.accept !== true) {
           Notify.create({
@@ -442,29 +470,37 @@ export default {
           const EventsDocRef = collection(db, "booking");
        addDoc(EventsDocRef, this.BookEvent).then((result) => {
        if(result._key.path!=null && result._key.path!=undefined)
-       {
-     this.BookEvent = {
-      AttendeeName:"",
-      PhoneNumber:"",
-      Personemail:"",
-      Gender:"",
-      Dietpreference:"",
-      AccompaniedBy:""
-            };
+       {   Notify.create({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: 'Ticket booked successfully for event:'+this.selectedEvent.eventTitle
+          })
+        const Element = document.getElementById('dvqr');
+      Element.style.display="block";         //dvqr
+    
       this.accept=false;
       new QRious({
           level: "H",
           padding: 25,
           size: 300,
           element:document.getElementById("qr-code"),
-          value: result._key.path.segments[1],
-        });
-           /* this.activeScreen="list";
-      this.isbooking="false"; */
+          value: result._key.path.segments[1]+'@'+ this.BookEvent.AttendeeName+'@'
+          +this.selectedEvent.eventTitle+'@'+this.selectedEvent.id });
+        this.BookEvent = {
+      AttendeeName:"",
+      EventId:"",
+      EventTitle:"",
+      PhoneNumber:"",
+      Personemail:"",
+      Gender:"",
+      Dietpreference:"",
+      AccompaniedBy:""
+            };
+      this.isbooking="false"; 
       }
           }).catch(error=>{alert(error.message)});
-          
-             
+                     
       
         } 
       },
@@ -472,6 +508,8 @@ export default {
       onReset () {
         this.BookEvent = {
       AttendeeName:"",
+      EventId:"",
+      EventTitle:"",
       PhoneNumber:"",
       Personemail:"",
       Gender:"",
@@ -488,6 +526,8 @@ export default {
          this.loginstatus="false";
          this.isbooking="false";
          this.activeScreen="list";
+         const Element = document.getElementById('dvqr');
+      Element.style.display="none";    
         alert('User Signed out');
         
         }).catch((error) => {
@@ -529,11 +569,40 @@ export default {
       
       this.selectedEvent = objEvent;
       this.activeScreen = "details:";
+      this.BookEvent.EventId= this.selectedEvent.id;
+      this.BookEvent.EventTitle= this.selectedEvent.eventTitle;
+      
+    },
+    draftcanvasticket(index,obj){
+      alert("drfat");
+      document.getElementById("qr").id = "qr"+index;
+        new QRious({
+          level: "H",
+          padding: 25,
+          size: 300,
+          element:document.getElementById("qr"+index),
+          value: obj.id+'@'+ obj.AttendeeName+'@'
+          +this.selectedEvent.eventTitle+'@'+this.selectedEvent.id }); 
+        },
+    onbookedEvents()
+    { this.activeScreen="bookedevents";
+
+      alert(JSON.stringify(this.bookedList))
     },
     onHomeClick(){
       if(this.activeScreen == "details:")
       {this.activeScreen="list";}
       this.isbooking="false";
+      const Element = document.getElementById('dvqr');
+      Element.style.display="none"; 
+      this.BookEvent = {
+      AttendeeName:"",
+      PhoneNumber:"",
+      Personemail:"",
+      Gender:"",
+      Dietpreference:"",
+      AccompaniedBy:""
+            };
     },
     submit(event) {
       // alert(JSON.stringify(event))
@@ -579,13 +648,21 @@ export default {
   },
   mounted() {
     const catsRef = collection(db, "RSVPEvents");
-    //const objcategories = [];
+    const appliedbookings = collection(db, "booking");
     onSnapshot(catsRef, (snapshot) => {
       this.eventList = [];
       snapshot.docs.forEach((doc) => {
         this.eventList.push({ ...doc.data(), id: doc.id });
       });
     });
+    onSnapshot(appliedbookings, (snapshot) => {
+      this.bookedList = [];
+      snapshot.docs.forEach((doc) => {
+        this.bookedList.push({ ...doc.data(), id: doc.id });
+        
+      });
+    }); 
+   // alert(JSON.stringify(this.bookedList));
   },
 };
 </script>
