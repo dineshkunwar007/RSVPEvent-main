@@ -606,6 +606,7 @@ export default {
     },
     submit(event) {
       // alert(JSON.stringify(event))
+      //tst
       //debugger;
       let email = this.email;
       let password = this.password;
